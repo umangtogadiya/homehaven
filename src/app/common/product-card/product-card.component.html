@@ -1,0 +1,16 @@
+<ng-container *ngFor="let item of Items">
+  <div class="col-12 col-md-{{ col }} col-lg-{{ col }} mb-4">
+    <a class="product-item" routerLink="/cart">
+      <img
+        src="assets/images/{{ item.img }}"
+        class="img-fluid product-thumbnail"
+      />
+      <h3 class="product-title">{{ item.title }}</h3>
+      <strong class="product-price">£{{ item.price }}</strong>
+
+      <span class="icon-cross">
+        <img src="assets/images/cross.svg" class="img-fluid" />
+      </span>
+    </a>
+  </div>
+</ng-container>

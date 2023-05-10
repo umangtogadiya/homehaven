@@ -1,0 +1,65 @@
+<nav
+  class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark"
+  arial-label="Furni navigation bar"
+>
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">HomeHaven<span>.</span></a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarsFurni"
+      aria-controls="navbarsFurni"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsFurni">
+      <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+        <li [ngClass]="{ 'nav-item active': currentRoute === '/' }">
+          <a class="nav-link" routerLink="/">Home</a>
+        </li>
+        <li [ngClass]="{ 'nav-item active': currentRoute === '/shop' }">
+          <a class="nav-link" routerLink="/shop">Shop</a>
+        </li>
+        <li [ngClass]="{ 'nav-item active': currentRoute === '/about' }">
+          <a class="nav-link" routerLink="/about">About us</a>
+        </li>
+        <li [ngClass]="{ 'nav-item active': currentRoute === '/services' }">
+          <a class="nav-link" routerLink="/services">Services</a>
+        </li>
+        <li [ngClass]="{ 'nav-item active': currentRoute === '/blog' }">
+          <a class="nav-link" routerLink="/blog">Blog</a>
+        </li>
+        <li [ngClass]="{ 'nav-item active': currentRoute === '/contact' }">
+          <a class="nav-link" routerLink="/contact">Contact us</a>
+        </li>
+      </ul>
+
+      <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+        <li *ngIf="login">
+          <a class="nav-link" (click)="signIn()" routerLink="/profile"
+            ><img src="assets/images/user.svg"
+          /></a>
+        </li>
+        <li *ngIf="!login">
+          <button
+            class="btn btn-sm p2"
+            (click)="signIn()"
+            routerLink="/login-signup"
+          >
+            Sign In
+          </button>
+        </li>
+        <li>
+          <a class="nav-link" routerLink="/cart"
+            ><img src="assets/images/cart.svg"
+          /></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

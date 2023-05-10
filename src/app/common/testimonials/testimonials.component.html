@@ -1,0 +1,40 @@
+<div class="col-lg-12">
+  <div class="testimonial-slider-wrap text-center">
+    <div id="testimonial-nav">
+      <span class="prev" data-controls="prev"
+        ><span class="fa fa-chevron-left"></span
+      ></span>
+      <span class="next" data-controls="next"
+        ><span class="fa fa-chevron-right"></span
+      ></span>
+    </div>
+
+    <div class="testimonial-slider">
+      <div class="item" *ngFor="let item of Items">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 mx-auto">
+            <div class="testimonial-block text-center">
+              <blockquote class="mb-5">
+                <p>&ldquo;{{ item.details }}&rdquo;</p>
+              </blockquote>
+
+              <div class="author-info">
+                <div class="author-pic">
+                  <img
+                    src="assets/images/{{ item.img }}"
+                    alt="Maria Jones"
+                    class="img-fluid"
+                  />
+                </div>
+                <h3 class="font-weight-bold">{{ item.name }}</h3>
+                <span class="position d-block mb-3">{{
+                  item.designation
+                }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

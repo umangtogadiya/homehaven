@@ -1,0 +1,194 @@
+<div class="container" id="container">
+  <div class="form-container sign-up-container form-group">
+    <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
+      <h1>Create Account</h1>
+      <!-- <div class="social-container">
+        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+      </div> -->
+      <span>or use your email for registration</span>
+      <input
+        class="form-control mb-3"
+        type="text"
+        placeholder="Name"
+        formControlName="name"
+        [ngClass]="{
+          'is-invalid':
+            signUpForm.get('name')?.invalid && signUpForm.get('name')?.touched,
+          'is-valid':
+            signUpForm.get('name')?.valid && signUpForm.get('name')?.touched
+        }"
+      />
+      <div
+        *ngIf="
+          signUpForm.get('name')?.invalid && signUpForm.get('name')?.touched
+        "
+      >
+        <div
+          *ngIf="signUpForm.get('name')?.hasError('required')"
+          class="invalid-feedback"
+        >
+          Name is required.
+        </div>
+        <div
+          *ngIf="signUpForm.get('name')?.hasError('minlength')"
+          class="invalid-feedback"
+        >
+          Name should be at least 3 characters long.
+        </div>
+        <div
+          *ngIf="signUpForm.get('name')?.hasError('maxlength')"
+          class="invalid-feedback"
+        >
+          Name should not exceed 20 characters.
+        </div>
+      </div>
+      <input
+        class="form-control mb-3"
+        type="email"
+        placeholder="Email"
+        formControlName="email"
+        [ngClass]="{
+          'is-invalid':
+            signUpForm.get('email')?.invalid &&
+            signUpForm.get('email')?.touched,
+          'is-valid':
+            signUpForm.get('email')?.valid && signUpForm.get('email')?.touched
+        }"
+      />
+      <div
+        *ngIf="
+          signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched
+        "
+      >
+        <div
+          *ngIf="signUpForm.get('email')?.hasError('required')"
+          class="invalid-feedback"
+        >
+          Email is required.
+        </div>
+        <div
+          *ngIf="signUpForm.get('email')?.hasError('email')"
+          class="invalid-feedback"
+        >
+          Please enter a valid email.
+        </div>
+      </div>
+      <input
+        class="form-control mb-3"
+        type="password"
+        placeholder="Password"
+        formControlName="password"
+        [ngClass]="{
+          'is-invalid':
+            signUpForm.get('password')?.invalid &&
+            signUpForm.get('password')?.touched,
+          'is-valid':
+            signUpForm.get('password')?.valid &&
+            signUpForm.get('password')?.touched
+        }"
+      />
+      <div
+        *ngIf="
+          signUpForm.get('password')?.invalid &&
+          signUpForm.get('password')?.touched
+        "
+      >
+        <div
+          *ngIf="signUpForm.get('password')?.hasError('required')"
+          class="invalid-feedback"
+        >
+          Password is required.
+        </div>
+      </div>
+      <button class="btn">Sign Up</button>
+    </form>
+  </div>
+  <div class="form-container sign-in-container form-group">
+    <form [formGroup]="loginForm" (ngSubmit)="signIn()">
+      <h1>Sign in</h1>
+      <!-- <div class="social-container">
+        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+      </div> -->
+      <span>or use your account</span>
+      <input
+        class="form-control mb-3"
+        type="email"
+        placeholder="Email"
+        formControlName="email"
+        [ngClass]="{
+          'is-invalid':
+            loginForm.get('email')?.invalid && loginForm.get('email')?.touched,
+          'is-valid':
+            loginForm.get('email')?.valid && loginForm.get('email')?.touched
+        }"
+      />
+      <div
+        *ngIf="
+          loginForm.get('email')?.invalid && loginForm.get('email')?.touched
+        "
+      >
+        <div
+          *ngIf="loginForm.get('email')?.hasError('required')"
+          class="invalid-feedback"
+        >
+          Email is required.
+        </div>
+        <div
+          *ngIf="loginForm.get('email')?.hasError('email')"
+          class="invalid-feedback"
+        >
+          Please enter a valid email.
+        </div>
+      </div>
+      <input
+        class="form-control"
+        type="password"
+        placeholder="Password"
+        formControlName="password"
+        [ngClass]="{
+          'is-invalid':
+            loginForm.get('password')?.invalid &&
+            loginForm.get('password')?.touched,
+          'is-valid':
+            loginForm.get('password')?.valid &&
+            loginForm.get('password')?.touched
+        }"
+      />
+      <div
+        *ngIf="
+          loginForm.get('password')?.invalid &&
+          loginForm.get('password')?.touched
+        "
+      >
+        <div
+          *ngIf="loginForm.get('password')?.hasError('required')"
+          class="invalid-feedback"
+        >
+          Password is required.
+        </div>
+      </div>
+      <a href="#">Forgot your password?</a>
+      <button class="btn" type="submit" [disabled]="loginForm.invalid">
+        Sign In
+      </button>
+    </form>
+  </div>
+  <div class="overlay-container">
+    <div class="overlay">
+      <div class="overlay-panel overlay-left">
+        <h1>Welcome Back!</h1>
+        <p>To keep connected with us please login with your personal info</p>
+        <button class="btn" id="signIn">Sign In</button>
+      </div>
+      <div class="overlay-panel overlay-right">
+        <h1>Hello, Friend!</h1>
+        <p>Enter your personal details and start journey with us</p>
+        <button class="btn" id="signUp">Sign Up</button>
+      </div>
+    </div>
+  </div>
+</div>
