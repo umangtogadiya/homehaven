@@ -37,6 +37,10 @@ const routes: Routes = [
       import('./checkout/checkout.module').then((m) => m.CheckoutModule),
   },
   {
+    path: 'blog',
+    loadChildren: () => import('./blog/blog.module').then((m) => m.BlogModule),
+  },
+  {
     path: 'login-signup',
     loadChildren: () =>
       import('./login-signup/login-signup.module').then(

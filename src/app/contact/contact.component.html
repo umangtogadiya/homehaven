@@ -121,24 +121,102 @@
             </div>
           </div>
 
-          <form>
+          <form [formGroup]="ContactFrom" (ngSubmit)="onSubmit()">
             <div class="row">
               <div class="col-6">
                 <div class="form-group">
                   <label class="text-black" for="fname">First name</label>
-                  <input type="text" class="form-control" id="fname" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="fname"
+                    formControlName="fname"
+                    [ngClass]="{
+                      'is-invalid':
+                        ContactFrom.get('fname')?.invalid &&
+                        ContactFrom.get('fname')?.touched,
+                      'is-valid':
+                        ContactFrom.get('fname')?.valid &&
+                        ContactFrom.get('fname')?.touched
+                    }"
+                  />
+                  <div
+                    *ngIf="
+                      ContactFrom.get('fname')?.invalid &&
+                      ContactFrom.get('fname')?.touched
+                    "
+                  >
+                    <div
+                      *ngIf="ContactFrom.get('fname')?.hasError('required')"
+                      class="invalid-feedback"
+                    >
+                      First Name is required.
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="col-6">
                 <div class="form-group">
                   <label class="text-black" for="lname">Last name</label>
-                  <input type="text" class="form-control" id="lname" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="lname"
+                    formControlName="lname"
+                    [ngClass]="{
+                      'is-invalid':
+                        ContactFrom.get('lname')?.invalid &&
+                        ContactFrom.get('lname')?.touched,
+                      'is-valid':
+                        ContactFrom.get('lname')?.valid &&
+                        ContactFrom.get('lname')?.touched
+                    }"
+                  />
+                  <div
+                    *ngIf="
+                      ContactFrom.get('lname')?.invalid &&
+                      ContactFrom.get('lname')?.touched
+                    "
+                  >
+                    <div
+                      *ngIf="ContactFrom.get('lname')?.hasError('required')"
+                      class="invalid-feedback"
+                    >
+                      Last Name is required.
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="form-group">
               <label class="text-black" for="email">Email address</label>
-              <input type="email" class="form-control" id="email" />
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                formControlName="email"
+                [ngClass]="{
+                  'is-invalid':
+                    ContactFrom.get('email')?.invalid &&
+                    ContactFrom.get('email')?.touched,
+                  'is-valid':
+                    ContactFrom.get('email')?.valid &&
+                    ContactFrom.get('email')?.touched
+                }"
+              />
+              <div
+                *ngIf="
+                  ContactFrom.get('email')?.invalid &&
+                  ContactFrom.get('email')?.touched
+                "
+              >
+                <div
+                  *ngIf="ContactFrom.get('email')?.hasError('required')"
+                  class="invalid-feedback"
+                >
+                  Email is required.
+                </div>
+              </div>
             </div>
 
             <div class="form-group mb-5">
@@ -149,10 +227,36 @@
                 id="message"
                 cols="30"
                 rows="5"
+                formControlName="message"
+                [ngClass]="{
+                  'is-invalid':
+                    ContactFrom.get('message')?.invalid &&
+                    ContactFrom.get('message')?.touched,
+                  'is-valid':
+                    ContactFrom.get('message')?.valid &&
+                    ContactFrom.get('message')?.touched
+                }"
               ></textarea>
+              <div
+                *ngIf="
+                  ContactFrom.get('message')?.invalid &&
+                  ContactFrom.get('message')?.touched
+                "
+              >
+                <div
+                  *ngIf="ContactFrom.get('message')?.hasError('required')"
+                  class="invalid-feedback"
+                >
+                  Message is required.
+                </div>
+              </div>
             </div>
 
-            <button type="submit" class="btn btn-primary-hover-outline">
+            <button
+              type="submit"
+              class="btn btn-primary-hover-outline"
+              [disabled]="ContactFrom.invalid"
+            >
               Send Message
             </button>
           </form>
