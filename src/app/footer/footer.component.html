@@ -16,12 +16,25 @@
             ><span>Subscribe to Newsletter</span>
           </h3>
 
-          <form action="#" class="row g-3">
+          <form
+            [formGroup]="NewLetterFrom"
+            (ngSubmit)="onSubmit()"
+            class="row g-3"
+          >
             <div class="col-auto">
               <input
                 type="text"
                 class="form-control"
                 placeholder="Enter your name"
+                formControlName="name"
+                [ngClass]="{
+                  'is-invalid':
+                    NewLetterFrom.get('name')?.invalid &&
+                    NewLetterFrom.get('name')?.touched,
+                  'is-valid':
+                    NewLetterFrom.get('name')?.valid &&
+                    NewLetterFrom.get('name')?.touched
+                }"
               />
             </div>
             <div class="col-auto">
@@ -29,10 +42,23 @@
                 type="email"
                 class="form-control"
                 placeholder="Enter your email"
+                formControlName="email"
+                [ngClass]="{
+                  'is-invalid':
+                    NewLetterFrom.get('email')?.invalid &&
+                    NewLetterFrom.get('email')?.touched,
+                  'is-valid':
+                    NewLetterFrom.get('email')?.valid &&
+                    NewLetterFrom.get('email')?.touched
+                }"
               />
             </div>
             <div class="col-auto">
-              <button class="btn btn-primary">
+              <button
+                class="btn btn-primary"
+                type="submit"
+                [disabled]="NewLetterFrom.invalid"
+              >
                 <span class="fa fa-paper-plane"></span>
               </button>
             </div>

@@ -9,11 +9,13 @@ import { FooterComponent } from './footer/footer.component';
 import { environment } from 'src/environments/environment';
 // import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 // import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     // AngularFireModule.initializeApp(environment.firebaseConfig),
     // AngularFireAuthModule,
     // AngularFirestoreModule,

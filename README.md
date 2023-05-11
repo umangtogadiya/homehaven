@@ -1,27 +1,63 @@
 # HomeHaven
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.7.
+HomeHaven is a website for furniture and home accessories, built using Angular 15.2.7.
 
-## Development server
+## Table of Contents
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
 
-## Code scaffolding
+## Introduction
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+HomeHaven is a web application that allows users to explore and purchase a wide range of furniture and home accessories. It provides a user-friendly interface for browsing different categories, viewing product details, adding items to the cart, and making secure payments.
 
-## Build
+## Features
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- User authentication: Users can create accounts, log in, and manage their profiles.
+- Product catalog: A wide selection of furniture and home accessories are available for browsing.
+- Product details: Users can view detailed information about each product, including images, descriptions, prices, and customer reviews.
+- Search functionality: Users can search for specific products based on keywords or categories.
+- Shopping cart: Users can add items to their cart and proceed to checkout for payment.
+- Secure payments: Integration with popular payment gateways ensures secure transactions.
+- Order tracking: Users can track the status of their orders.
+- Wishlist: Users can create and manage wishlists to save products for future reference.
+- User reviews and ratings: Users can leave reviews and ratings for products.
+- Responsive design: The website is optimized for different devices, including desktops, tablets, and mobile phones.
 
-## Running unit tests
+## Installation
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+To install and run HomeHaven on your local machine, follow these steps:
 
-## Running end-to-end tests
+1.  Clone the repository:
+    `git clone https://github.com/your-username/HomeHaven.git`
+2.  Navigate to the project directory:
+    `cd HomeHaven`
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+3.  Install the dependencies:
+    `npm install`
 
-## Further help
+4.  Start the development server:
+    `ng serve`
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+5.  Open your browser and visit `http://localhost:4200` to access the HomeHaven website.
+
+## Usage
+
+- Sign up for a new account or log in with your existing credentials.
+- Browse the different categories or use the search functionality to find products.
+- Click on a product to view more details, including images, descriptions, prices, and reviews.
+- Add products to your cart and proceed to checkout for payment.
+- Track the status of your orders and manage your profile settings.
+- Create wishlists and save products for future reference.
+
+## Contributing
+
+Contributions are welcome! If you find any bugs or want to suggest new features, please open an issue or submit a pull request. Make sure to follow the existing coding style and include relevant tests.
+
+## License
+
+The HomeHaven project is licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute the code as per the terms of the license.
