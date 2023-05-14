@@ -38,16 +38,17 @@
 
       <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
         <li *ngIf="login">
-          <a class="nav-link" (click)="signIn()" routerLink="/profile"
+          <a class="nav-link" routerLink="/profile"
             ><img src="assets/images/user.svg"
           /></a>
         </li>
+        <li *ngIf="login">
+          <button class="btn btn-sm" (click)="signOut()">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          </button>
+        </li>
         <li *ngIf="!login">
-          <button
-            class="btn btn-sm p2"
-            (click)="signIn()"
-            routerLink="/login-signup"
-          >
+          <button class="btn btn-sm p2" routerLink="/login-signup">
             Sign In
           </button>
         </li>

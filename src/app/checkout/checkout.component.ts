@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-checkout',
@@ -9,8 +8,8 @@ import { DataService } from '../services/data.service';
 export class CheckoutComponent implements OnInit {
   cartItems: any;
   couponPercent: number = 0;
-  constructor(private dataService: DataService) {
-    this.cartItems = this.dataService.getData();
+  constructor() {
+    // this.cartItems = this.dataService.getData();
   }
   ngOnInit(): void {}
 

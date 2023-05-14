@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-login-signup',
@@ -11,7 +12,10 @@ export class LoginSignupComponent implements OnInit {
   loginForm!: FormGroup;
   signUpForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    public authService: AuthService
+  ) {}
   ngOnInit(): void {
     const signUpButton: any = document.getElementById('signUp');
     const signInButton: any = document.getElementById('signIn');
@@ -45,14 +49,21 @@ export class LoginSignupComponent implements OnInit {
   signIn(): void {
     if (this.loginForm.valid) {
       console.log(this.loginForm.value);
-      // Perform login logic here
+      const { email, password } = this.loginForm.value;
+      this.authService.SignIn(email, password);
     }
   }
 
   signUp(): void {
     if (this.signUpForm.valid) {
-      console.log(this.signUpForm.value);
-      // Perform login logic here
+      this.authService
+        .SignUp(this.signUpForm.value)
+        .then((res: any) => {
+          console.log('res', res);
+        })
+        .catch((err: any) => {
+          console.log(err);
+        });
     }
   }
 }

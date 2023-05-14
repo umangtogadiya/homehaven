@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './shared/guard/auth.guard';
 
 const routes: Routes = [
   {
@@ -30,11 +31,13 @@ const routes: Routes = [
   {
     path: 'cart',
     loadChildren: () => import('./cart/cart.module').then((m) => m.CartModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'checkout',
     loadChildren: () =>
       import('./checkout/checkout.module').then((m) => m.CheckoutModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'blog',
@@ -51,6 +54,7 @@ const routes: Routes = [
     path: 'profile',
     loadChildren: () =>
       import('./profile/profile.module').then((m) => m.ProfileModule),
+    canActivate: [AuthGuard],
   },
   { path: '', redirectTo: '/', pathMatch: 'full' },
   {

@@ -16,7 +16,7 @@
 <div class="untree_co-section before-footer-section">
   <div class="container">
     <div class="row mb-5">
-      <form class="col-md-12" method="post">
+      <form class="col-md-12">
         <div class="site-blocks-table">
           <table class="table">
             <thead>
@@ -33,15 +33,15 @@
               <tr *ngFor="let item of cartItems">
                 <td class="product-thumbnail">
                   <img
-                    src="assets/images/{{ item.img }}"
+                    src="assets/images/{{ item.productDetails?.img }}"
                     alt="Image"
                     class="img-fluid"
                   />
                 </td>
                 <td class="product-name">
-                  <h2 class="h5 text-black">{{ item.name }}</h2>
+                  <h2 class="h5 text-black">{{ item.productDetails.title }}</h2>
                 </td>
-                <td>£{{ item.price }}</td>
+                <td>£{{ item.productDetails.price }}</td>
                 <td>
                   <div
                     class="input-group mb-3 d-flex align-items-center quantity-container"
@@ -59,7 +59,7 @@
                     <input
                       type="text"
                       class="form-control text-center quantity-amount"
-                      value="{{ item.quantity }}"
+                      value="{{ item.qty }}"
                       aria-label="Example text with button addon"
                       aria-describedby="button-addon1"
                     />
@@ -74,7 +74,9 @@
                     </div>
                   </div>
                 </td>
-                <td>£{{ item.price }}</td>
+                <td>
+                  £{{ (item.productDetails.price * item.qty).toFixed(2) }}
+                </td>
                 <td>
                   <a
                     class="btn btn-black btn-sm"
@@ -135,6 +137,14 @@
               </div>
               <div class="col-md-6 text-right">
                 <strong class="text-black">£{{ cartTotal() }}</strong>
+              </div>
+            </div>
+            <div class="row mb-3" *ngIf="couponPercent > 0">
+              <div class="col-md-6">
+                <span class="text-black">Coupon</span>
+              </div>
+              <div class="col-md-6 text-right">
+                <strong class="text-black">£{{ couponTotal() }}</strong>
               </div>
             </div>
             <div class="row mb-5">

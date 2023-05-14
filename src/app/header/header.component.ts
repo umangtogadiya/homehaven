@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart, Event } from '@angular/router';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -9,16 +10,21 @@ import { Router, NavigationEnd, NavigationStart, Event } from '@angular/router';
 export class HeaderComponent implements OnInit {
   currentRoute: string = '';
   login: boolean = false;
-  constructor(private router: Router) {}
+
+  constructor(private router: Router, private authService: AuthService) {}
+
   ngOnInit(): void {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.currentRoute = event.url;
+        if (this.authService.isLoggedIn === true) {
+          this.login = true;
+        }
       }
     });
   }
 
-  signIn(): void {
-    this.login = !this.login;
+  signOut(): void {
+    this.authService.SignOut();
   }
 }

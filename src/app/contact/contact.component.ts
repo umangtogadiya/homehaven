@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonService } from '../shared/services/common.service';
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
@@ -7,7 +8,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ContactComponent implements OnInit {
   ContactFrom!: FormGroup;
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private commonService: CommonService
+  ) {}
 
   ngOnInit(): void {
     this.ContactFrom = this.formBuilder.group({
@@ -21,7 +25,11 @@ export class ContactComponent implements OnInit {
   onSubmit(): void {
     if (this.ContactFrom.valid) {
       console.log(this.ContactFrom.value);
-      // Perform login logic here
+      this.commonService
+        .contactFormSend(this.ContactFrom.value)
+        .subscribe((res: any) => {
+          console.log('res', res);
+        });
     }
   }
 }

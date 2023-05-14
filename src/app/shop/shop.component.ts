@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../shared/services/product.service';
 
 interface items {
   id: number;
@@ -13,7 +14,7 @@ interface items {
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.scss'],
 })
-export class ShopComponent {
+export class ShopComponent implements OnInit {
   productItems: Array<items> = [
     {
       id: 1,
@@ -80,4 +81,16 @@ export class ShopComponent {
       img: 'product-1.png',
     },
   ];
+
+  constructor(private productService: ProductService) {}
+
+  ngOnInit(): void {
+    this.getProducts();
+  }
+
+  getProducts() {
+    this.productService.allProducts().subscribe((res: any[]) => {
+      this.productItems = res;
+    });
+  }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonService } from '../shared/services/common.service';
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -7,7 +8,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class FooterComponent implements OnInit {
   NewLetterFrom!: FormGroup;
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private commonService: CommonService
+  ) {}
 
   ngOnInit(): void {
     this.NewLetterFrom = this.formBuilder.group({
@@ -19,7 +23,11 @@ export class FooterComponent implements OnInit {
   onSubmit(): void {
     if (this.NewLetterFrom.valid) {
       console.log(this.NewLetterFrom.value);
-      // Perform login logic here
+      this.commonService
+        .subscribeNewsletter(this.NewLetterFrom.value)
+        .subscribe((res: any) => {
+          console.log('res', res);
+        });
     }
   }
 }
