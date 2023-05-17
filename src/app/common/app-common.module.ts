@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { TestimonialsComponent } from './testimonials/testimonials.component';
 import { BlogCardComponent } from './blog-card/blog-card.component';
-
 @NgModule({
   declarations: [
     ProductCardComponent,

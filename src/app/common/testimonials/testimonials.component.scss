@@ -1,0 +1,14 @@
+/* Add these styles to your CSS file or component's styles */
+.testimonial-slider {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overflow: hidden;
+}
+
+.item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  width: 100%;
+}

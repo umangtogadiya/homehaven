@@ -20,6 +20,7 @@ export class CommonService {
   newsCollection = collection(this.firestore, 'newsLetter');
   blogsCollection = collection(this.firestore, 'blogs');
   couponCollection = collection(this.firestore, 'coupons');
+  testimonialsCollection = collection(this.firestore, 'testimonials');
 
   constructor(public firestore: Firestore) {}
 
@@ -35,6 +36,10 @@ export class CommonService {
 
   getBlogList(): Observable<any[]> {
     return collectionData(this.blogsCollection, { idField: 'id' });
+  }
+
+  getTestimonialsList(): Observable<any[]> {
+    return collectionData(this.testimonialsCollection, { idField: 'id' });
   }
 
   limitedBlog(lim: number): Observable<any[]> {
