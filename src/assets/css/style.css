@@ -712,7 +712,7 @@ a.more {
 }
 
 .before-footer-section {
-  padding: 7rem 0 12rem 0 !important;
+  padding: 5rem 0 12rem 0 !important;
 }
 
 .blog-section {
@@ -960,7 +960,7 @@ textarea {
 }
 
 .site-blocks-table .product-thumbnail {
-  width: 200px;
+  width: 120px;
 }
 
 .site-blocks-table .btn {
