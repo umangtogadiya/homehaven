@@ -51,7 +51,7 @@
                       <button
                         class="btn btn-outline-black decrease"
                         type="button"
-                        (click)="updateCartItemQuantity(item.id, false)"
+                        (click)="updateCartItemQuantity(item.productId, false)"
                       >
                         &minus;
                       </button>
@@ -67,7 +67,7 @@
                       <button
                         class="btn btn-outline-black increase"
                         type="button"
-                        (click)="updateCartItemQuantity(item.id, true)"
+                        (click)="updateCartItemQuantity(item.productId, true)"
                       >
                         &plus;
                       </button>
@@ -94,34 +94,56 @@
     <div class="row">
       <div class="col-md-6">
         <div class="row mb-5">
-          <div class="col-md-6 mb-3 mb-md-0">
-            <button class="btn btn-black btn-sm btn-block">Update Cart</button>
-          </div>
           <div class="col-md-6">
-            <button class="btn btn-outline-black btn-sm btn-block">
+            <button
+              class="btn btn-outline-black btn-sm btn-block"
+              routerLink="/shop"
+            >
               Continue Shopping
             </button>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <label class="text-black h4" for="coupon">Coupon</label>
-            <p>Enter your coupon code if you have one.</p>
+        <form [formGroup]="CouponForm" (ngSubmit)="applyCoupon()">
+          <div class="row">
+            <div class="col-md-12">
+              <label class="text-black h4" for="coupon">Coupon</label>
+              <p>Enter your coupon code if you have one.</p>
+            </div>
+            <div class="col-md-8 mb-3 mb-md-0">
+              <input
+                type="text"
+                class="form-control py-3"
+                id="coupon"
+                placeholder="Coupon Code"
+                formControlName="code"
+                [ngClass]="{
+                  'is-invalid':
+                    CouponForm.get('code')?.invalid &&
+                    CouponForm.get('code')?.touched,
+                  'is-valid':
+                    CouponForm.get('code')?.valid &&
+                    CouponForm.get('code')?.touched
+                }"
+              />
+              <div
+                *ngIf="
+                  CouponForm.get('code').invalid &&
+                  CouponForm.get('code').touched
+                "
+              >
+                <div *ngIf="CouponForm.get('code').hasError('required')">
+                  Coupon code is required
+                </div>
+                <div *ngIf="CouponForm.get('code').hasError('pattern')">
+                  Invalid coupon code
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <button class="btn btn-black" type="submit">Apply Coupon</button>
+            </div>
           </div>
-          <div class="col-md-8 mb-3 mb-md-0">
-            <input
-              type="text"
-              class="form-control py-3"
-              id="coupon"
-              placeholder="Coupon Code"
-            />
-          </div>
-          <div class="col-md-4">
-            <button class="btn btn-black" (click)="applyCoupon()">
-              Apply Coupon
-            </button>
-          </div>
-        </div>
+        </form>
       </div>
       <div class="col-md-6 pl-5">
         <div class="row justify-content-end">

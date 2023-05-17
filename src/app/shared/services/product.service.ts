@@ -8,9 +8,12 @@ import {
   doc,
   where,
   deleteDoc,
+  setDoc,
+  updateDoc,
 } from '@angular/fire/firestore';
 import { from, Observable } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +23,7 @@ export class ProductService {
   wishlistCollection = collection(this.firestore, 'wishlist');
   cartCollection = collection(this.firestore, 'cart');
 
-  constructor(public firestore: Firestore) {}
+  constructor(public firestore: Firestore, private router: Router) {}
 
   allProducts(): Observable<any[]> {
     return collectionData(this.productsCollection, { idField: 'id' });
@@ -47,6 +50,50 @@ export class ProductService {
         );
       })
     );
+  }
+
+  addToCart(productId: string, userId: string): Observable<any> {
+    const cartItemQuery = query(
+      this.cartCollection,
+      where('productId', '==', productId),
+      where('userId', '==', userId),
+      limit(1)
+    );
+
+    return collectionData(cartItemQuery, { idField: 'id' }).pipe(
+      map((cartItems: any[]) => {
+        if (cartItems.length > 0) {
+          return cartItems[0];
+        }
+        return null;
+      })
+    );
+  }
+
+  addUpdateCart(
+    cartItem: any,
+    userId: string,
+    status: boolean
+  ): Observable<any> {
+    if (status) {
+      const newQuantity = cartItem.qty + 1;
+      const cartItemDoc = doc(this.cartCollection, cartItem.id);
+      return from(updateDoc(cartItemDoc, { qty: newQuantity }));
+    } else {
+      const newCartItem = {
+        productId: cartItem.id,
+        userId,
+        price: cartItem.price,
+        qty: 1,
+      };
+      const cartItemDoc = doc(this.cartCollection);
+      return from(setDoc(cartItemDoc, newCartItem));
+    }
+  }
+
+  updateQty(cartItem: any) {
+    const cartItemDoc = doc(this.cartCollection, cartItem.id);
+    return from(updateDoc(cartItemDoc, { qty: cartItem.qty }));
   }
 
   removeFromCart(itemId: string): Observable<void> {

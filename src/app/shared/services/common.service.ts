@@ -7,6 +7,7 @@ import {
   collectionData,
   setDoc,
   limit,
+  where,
 } from '@angular/fire/firestore';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -18,6 +19,7 @@ export class CommonService {
   contactCollection = collection(this.firestore, 'contact');
   newsCollection = collection(this.firestore, 'newsLetter');
   blogsCollection = collection(this.firestore, 'blogs');
+  couponCollection = collection(this.firestore, 'coupons');
 
   constructor(public firestore: Firestore) {}
 
@@ -38,5 +40,27 @@ export class CommonService {
   limitedBlog(lim: number): Observable<any[]> {
     const limitedBlogQuery = query(this.blogsCollection, limit(lim));
     return collectionData(limitedBlogQuery, { idField: 'id' });
+  }
+
+  applyCouponCode(code: string): Observable<any> {
+    const couponQuery = query(this.couponCollection, where('code', '==', code));
+    return collectionData(couponQuery, { idField: 'id' }).pipe(
+      map((coupons: any[]) => {
+        if (coupons.length > 0) {
+          const coupon = coupons[0];
+          const currentDate = new Date();
+          const startDate = coupon.startDate.toDate();
+          const endDate = coupon.endDate.toDate();
+
+          if (currentDate >= startDate && currentDate <= endDate) {
+            return { ...coupon, expStatus: false };
+          } else {
+            return { ...coupon, expStatus: true };
+          }
+        } else {
+          return { expStatus: true };
+        }
+      })
+    );
   }
 }

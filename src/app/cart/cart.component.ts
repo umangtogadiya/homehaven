@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../shared/services/product.service';
-
+import { take } from 'rxjs';
+import { CommonService } from '../shared/services/common.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -10,13 +12,23 @@ export class CartComponent implements OnInit {
   cartItems: Array<any> = [];
   couponPercent: number = 0;
   userDetails: any;
-  constructor(private productService: ProductService) {
+  CouponForm!: FormGroup;
+
+  constructor(
+    private productService: ProductService,
+    private commonService: CommonService,
+    private formBuilder: FormBuilder
+  ) {
     const userDetailsString = localStorage.getItem('user');
     this.userDetails =
       userDetailsString !== null ? JSON.parse(userDetailsString) : {};
   }
+
   ngOnInit(): void {
     this.wishlist();
+    this.CouponForm = this.formBuilder.group({
+      code: ['', Validators.required],
+    });
   }
 
   wishlist(): void {
@@ -30,28 +42,37 @@ export class CartComponent implements OnInit {
   cartTotal(): string {
     let totalPrice = 0;
     for (const product of this.cartItems) {
-      totalPrice +=
-        parseFloat(product.productDetails.price) * parseInt(product.qty);
+      const productPrice = parseFloat(product.productDetails?.price);
+      const productQty = parseInt(product.qty);
+      totalPrice += productPrice * productQty;
     }
-    if (this.couponPercent > 0) {
-      const discount = totalPrice * (this.couponPercent / 100);
-      totalPrice -= discount;
-    }
+    const discount = totalPrice * (this.couponPercent / 100);
+    totalPrice -= discount;
     return totalPrice.toFixed(2);
   }
 
   applyCoupon(): void {
-    this.couponPercent = 20;
+    if (this.CouponForm.valid) {
+      this.commonService
+        .applyCouponCode(this.CouponForm.value['code'])
+        .subscribe((res: any) => {
+          if (!res.expStatus) {
+            this.couponPercent = res.discount;
+          } else {
+            // set coupon expire or invalid code
+          }
+        });
+    }
   }
 
   couponTotal(): string {
-    let totalAmount: number = 0;
+    let totalAmount = 0;
     for (const item of this.cartItems) {
-      const price: number = parseFloat(item.productDetails.price);
-      const quantity: number = parseInt(item.qty);
+      const price = parseFloat(item.productDetails.price);
+      const quantity = parseInt(item.qty);
       totalAmount += price * quantity;
     }
-    const discountAmount: number = totalAmount * (this.couponPercent / 100);
+    const discountAmount = (totalAmount * this.couponPercent) / 100;
     return discountAmount.toFixed(2);
   }
 
@@ -61,11 +82,24 @@ export class CartComponent implements OnInit {
     });
   }
 
-  updateCartItemQuantity(itemId: number, increment: boolean): void {
-    const item = this.cartItems.find((item) => item.id === itemId);
-    if (item) {
-      item.qty = increment ? item.qty + 1 : Math.max(item.qty - 1, 1);
-    }
+  updateCartItemQuantity(productId: string, increment: boolean): void {
+    this.productService
+      .addToCart(productId, this.userDetails.uid)
+      .pipe(take(1))
+      .subscribe((res: any) => {
+        if (res) {
+          var updatedQty = increment ? res.qty + 1 : Math.max(res.qty - 1, 1);
+          this.updateCart({ ...res, qty: updatedQty });
+        } else {
+          // item removed from cart
+        }
+      });
+  }
+
+  updateCart(res: any) {
+    this.productService.updateQty(res).subscribe((added: any) => {
+      console.log('added', added);
+    });
   }
 
   checkout(): void {
