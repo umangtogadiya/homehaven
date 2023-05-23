@@ -10,7 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class CartComponent implements OnInit {
   cartItems: Array<any> = [];
-  couponPercent: number = 0;
+  couponPercent = 0;
   userDetails: any;
   CouponForm!: FormGroup;
 
@@ -25,13 +25,13 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.wishlist();
+    this.getCart();
     this.CouponForm = this.formBuilder.group({
       code: ['', Validators.required],
     });
   }
 
-  wishlist(): void {
+  getCart(): void {
     this.productService
       .getCartWithProductsDetails(this.userDetails.uid)
       .subscribe((res: any[]) => {
@@ -88,7 +88,7 @@ export class CartComponent implements OnInit {
       .pipe(take(1))
       .subscribe((res: any) => {
         if (res) {
-          var updatedQty = increment ? res.qty + 1 : Math.max(res.qty - 1, 1);
+          const updatedQty = increment ? res.qty + 1 : Math.max(res.qty - 1, 1);
           this.updateCart({ ...res, qty: updatedQty });
         } else {
           // item removed from cart

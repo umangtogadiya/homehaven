@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ProfileComponent implements OnInit {
   profileForm!: FormGroup;
-  userId: string = '';
+  userId = '';
   constructor(
     public userService: UserService,
     private formBuilder: FormBuilder

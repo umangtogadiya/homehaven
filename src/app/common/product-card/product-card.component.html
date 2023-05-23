@@ -1,16 +1,17 @@
 <ng-container *ngFor="let item of Items">
   <div class="col-12 col-md-{{ col }} col-lg-{{ col }} mb-4">
-    <a class="product-item">
-      <img
-        src="assets/images/{{ item.img }}"
-        class="img-fluid product-thumbnail"
-      />
-      <h3 class="product-title">{{ item.title }}</h3>
-      <strong class="product-price">£{{ item.price }}</strong>
-
+    <div class="product-item">
+      <a [routerLink]="['/product', item.id]">
+        <img
+          src="assets/images/{{ item.img }}"
+          class="img-fluid product-thumbnail"
+        />
+        <h3 class="product-title">{{ item.title }}</h3>
+        <strong class="product-price">£{{ item.price }}</strong>
+      </a>
       <span class="icon-cross" (click)="addToCart(item)">
         <img src="assets/images/cross.svg" class="img-fluid" />
       </span>
-    </a>
+    </div>
   </div>
 </ng-container>

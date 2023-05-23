@@ -4,7 +4,6 @@ import {
   collection,
   doc,
   getDoc,
-  DocumentData,
   setDoc,
 } from '@angular/fire/firestore';
 import { from, Observable } from 'rxjs';
@@ -27,7 +26,7 @@ export class UserService {
       map((snapshot) => {
         const userData: any = snapshot.data();
         const projectedData: any = { id: snapshot.id };
-        let keys: any[] = [
+        const keys: any[] = [
           'firstName',
           'lastName',
           'email',

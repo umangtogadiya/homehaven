@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { TestimonialsComponent } from './testimonials/testimonials.component';
 import { BlogCardComponent } from './blog-card/blog-card.component';
+import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     ProductCardComponent,
@@ -10,7 +11,7 @@ import { BlogCardComponent } from './blog-card/blog-card.component';
     BlogCardComponent,
     BlogCardComponent,
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   exports: [
     ProductCardComponent,
     TestimonialsComponent,

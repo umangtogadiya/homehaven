@@ -18,7 +18,7 @@ interface items {
 })
 export class ProductCardComponent {
   @Input() Items: Array<items> = [];
-  @Input() col: number = 3;
+  @Input() col = 3;
 
   userDetails: any;
 

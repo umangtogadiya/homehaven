@@ -10,9 +10,10 @@ import {
   deleteDoc,
   setDoc,
   updateDoc,
+  getDoc,
 } from '@angular/fire/firestore';
 import { from, Observable } from 'rxjs';
-import { switchMap, map, tap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -32,6 +33,54 @@ export class ProductService {
   limitedProducts(lim: number): Observable<any[]> {
     const limitedProductsQuery = query(this.productsCollection, limit(lim));
     return collectionData(limitedProductsQuery, { idField: 'id' });
+  }
+
+  getProductDetails(id: string, userId: string): Observable<any> {
+    const productDocRef = doc(this.productsCollection, id);
+    const productDetails$ = from(getDoc(productDocRef)).pipe(
+      map((snapshot) => {
+        if (snapshot.exists()) {
+          const productData = snapshot.data();
+          return { id: snapshot.id, ...productData };
+        } else {
+          return null;
+        }
+      })
+    );
+
+    const cartDetails$ = productDetails$.pipe(
+      switchMap((product) => {
+        if (product) {
+          const cartQuery = query(
+            this.cartCollection,
+            where('productId', '==', product.id),
+            where('userId', '==', userId)
+          );
+          return collectionData(cartQuery, { idField: 'id' });
+        } else {
+          return [];
+        }
+      })
+    );
+
+    return productDetails$.pipe(
+      switchMap((product) => {
+        if (product) {
+          return cartDetails$.pipe(
+            map((cartItems) => {
+              return {
+                ...product,
+                qty: cartItems[0] ? cartItems[0].qty : 1,
+                cartStatus: cartItems[0] ? true : false,
+              };
+            })
+          );
+        } else {
+          this.router.navigateByUrl('/shop');
+          return [];
+        }
+      })
+    );
   }
 
   getCartWithProductsDetails(userId: string): Observable<any[]> {

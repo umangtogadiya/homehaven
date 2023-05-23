@@ -11,15 +11,15 @@
   </div>
 </div> -->
 
-<div class="card">
+<div class="card" *ngIf="productDetails">
   <div class="product-imgs">
     <div class="img-display">
       <div class="img-showcase">
         <img
-          src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_1.jpg"
-          alt="shoe image"
+          src="assets/images/{{ productDetails?.img }}"
+          [alt]="productDetails.title"
         />
-        <img
+        <!-- <img
           src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg"
           alt="shoe image"
         />
@@ -30,7 +30,7 @@
         <img
           src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_4.jpg"
           alt="shoe image"
-        />
+        /> -->
       </div>
     </div>
     <!-- <div class="img-select">
@@ -69,7 +69,7 @@
       </div> -->
   </div>
   <div class="product-content">
-    <h2 class="product-title">{{ productDetails.name }}</h2>
+    <h2 class="product-title">{{ productDetails.title }}</h2>
     <div class="product-rating">
       <i class="fas fa-star"></i>
       <i class="fas fa-star"></i>
@@ -90,28 +90,47 @@
 
     <div class="product-detail">
       <h2>about this item:</h2>
-      <p>
+      <!-- <p>
         {{ productDetails.description }}
-      </p>
-      <ul>
+      </p> -->
+      <div *ngIf="isDescriptionLong()">
+        <p>
+          {{
+            isExpanded
+              ? productDetails.description
+              : (productDetails.description | slice : 0 : wordThreshold)
+          }}
+          <span *ngIf="!isExpanded">... </span>
+          <a
+            (click)="toggleExpand()"
+            style="color: rgb(66, 66, 255); cursor: pointer"
+            >{{ isExpanded ? "Read Less" : "Read More" }}</a
+          >
+        </p>
+      </div>
+      <div *ngIf="!isDescriptionLong()">
+        <p>{{ productDetails.description }}</p>
+      </div>
+
+      <!-- <ul>
         <li>Color: <span>Black</span></li>
         <li>Available: <span>in stock</span></li>
         <li>Category: <span>Shoes</span></li>
         <li>Shipping Area: <span>All over the world</span></li>
         <li>Shipping Fee: <span>Free</span></li>
-      </ul>
+      </ul> -->
     </div>
 
     <div class="purchase-info">
       <div
         class="input-group mb-3 d-flex align-items-center quantity-container"
-        style="max-width: 120px"
+        style="width: 150px"
       >
         <div class="input-group-prepend">
           <button
             class="btn btn-outline-black decrease"
             type="button"
-            (click)="updateCartItemQuantity(false)"
+            (click)="updateCartItemQuantity(productDetails.id, false)"
           >
             &minus;
           </button>
@@ -119,23 +138,46 @@
         <input
           type="text"
           class="form-control text-center quantity-amount"
-          value="{{ productDetails.quantity }}"
+          value="{{ productDetails.qty }}"
           aria-label="Example text with button addon"
           aria-describedby="button-addon1"
+          [disabled]="true"
         />
         <div class="input-group-append">
           <button
             class="btn btn-outline-black increase"
             type="button"
-            (click)="updateCartItemQuantity(true)"
+            (click)="updateCartItemQuantity(productDetails.id, true)"
           >
             &plus;
           </button>
         </div>
       </div>
-      <button type="button" class="btn" routerLink="/cart">
-        Add to Cart <i class="fas fa-shopping-cart"></i>
+      <button
+        type="button"
+        class="btn"
+        [routerLink]="productDetails.cartStatus ? '/cart' : null"
+        (click)="productDetails.cartStatus ? '' : addToCart()"
+      >
+        {{ productDetails.cartStatus ? "Go to Cart" : "Add to Cart" }}
+        <i class="fas fa-shopping-cart"></i>
       </button>
     </div>
   </div>
 </div>
+
+<ng-container *ngIf="!productDetails">
+  <div class="spinner-body">
+    <div class="spinner">
+      <div class="square" id="s1"></div>
+      <div class="square" id="s2"></div>
+      <div class="square" id="s3"></div>
+      <div class="square" id="s4"></div>
+      <div class="square" id="s5"></div>
+      <div class="square" id="s6"></div>
+      <div class="square" id="s7"></div>
+      <div class="square" id="s8"></div>
+      <div class="square" id="s9"></div>
+    </div>
+  </div>
+</ng-container>

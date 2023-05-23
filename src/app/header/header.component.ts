@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd, NavigationStart, Event } from '@angular/router';
+import { Router, NavigationEnd, Event } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 
 @Component({
@@ -8,8 +8,8 @@ import { AuthService } from '../shared/services/auth.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  currentRoute: string = '';
-  login: boolean = false;
+  currentRoute = '';
+  login = false;
 
   constructor(private router: Router, private authService: AuthService) {}
 
