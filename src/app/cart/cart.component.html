@@ -1,4 +1,4 @@
-<!-- Start Hero Section -->
+<!--     padding: calc(3rem - 30px) 0 1.2rem 0; -->
 <div class="hero">
   <div class="container">
     <div class="row justify-content-between">
@@ -11,9 +11,31 @@
     </div>
   </div>
 </div>
-<!-- End Hero Section -->
 
-<div class="untree_co-section before-footer-section">
+<div
+  class="d-md-flex align-items-md-center untree_co-section before-footer-section"
+  *ngIf="cartItems.length === 0"
+>
+  <div class="container text-center space-2 space-3--lg">
+    <div class="w-md-80 w-lg-60 text-center mx-md-auto">
+      <div class="mb-5">
+        <span class="u-icon u-icon--secondary u-icon--lg rounded-circle mb-4">
+          <span class="fa fa-shopping-bag u-icon__inner"></span>
+        </span>
+        <h1 class="h2">Your cart is currently empty</h1>
+        <p>
+          Before proceed to checkout you must add some products to your shopping
+          cart. You will find a lot of interesting products on our "Shop" page.
+        </p>
+      </div>
+      <a class="btn btn-primary btn-wide" routerLink="/shop">Start Shopping</a>
+    </div>
+  </div>
+</div>
+<div
+  class="untree_co-section before-footer-section"
+  *ngIf="cartItems.length > 0"
+>
   <div class="container">
     <div class="row mb-5">
       <form class="col-md-12">

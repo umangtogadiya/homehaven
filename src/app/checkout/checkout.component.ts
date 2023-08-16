@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../shared/services/product.service';
 import { CommonService } from '../shared/services/common.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkout',
@@ -15,10 +16,15 @@ export class CheckoutComponent implements OnInit {
   BillingForm!: FormGroup;
   CouponForm!: FormGroup;
 
+  couponTotal: any;
+  total: any;
+  subTotal: any;
+
   constructor(
     private formBuilder: FormBuilder,
     private productService: ProductService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private router: Router
   ) {
     const userDetailsString = localStorage.getItem('user');
     this.userDetails =
@@ -42,16 +48,16 @@ export class CheckoutComponent implements OnInit {
       shippingAddress: [false, Validators.required],
       orderNotes: [''],
 
-      s_firstName: ['', Validators.required],
-      s_lastName: ['', Validators.required],
-      s_email: ['', Validators.required],
-      s_phoneno: ['', Validators.required],
-      s_companyName: [''],
-      s_address1: ['', Validators.required],
-      s_address2: [''],
-      s_state: ['', Validators.required],
-      s_postal: ['', Validators.required],
-      s_country: ['', Validators.required],
+      // s_firstName: ['', Validators.required],
+      // s_lastName: ['', Validators.required],
+      // s_email: ['', Validators.required],
+      // s_phoneno: ['', Validators.required],
+      // s_companyName: [''],
+      // s_address1: ['', Validators.required],
+      // s_address2: [''],
+      // s_state: ['', Validators.required],
+      // s_postal: ['', Validators.required],
+      // s_country: ['', Validators.required],
     });
     this.CouponForm = this.formBuilder.group({
       code: ['', Validators.required],
@@ -62,20 +68,26 @@ export class CheckoutComponent implements OnInit {
     this.productService
       .getCartWithProductsDetails(this.userDetails.uid)
       .subscribe((res: any[]) => {
-        this.cartItems = res;
+        if (res && res.length > 0) {
+          this.cartItems = res;
+          this.cartCalculation();
+        } else {
+          this.router.navigateByUrl('/cart');
+        }
       });
   }
 
-  cartTotal(): string {
+  cartCalculation(): void {
     let totalPrice = 0;
     for (const product of this.cartItems) {
       const productPrice = parseFloat(product.productDetails?.price);
       const productQty = parseInt(product.qty);
       totalPrice += productPrice * productQty;
     }
-    const discount = totalPrice * (this.couponPercent / 100);
-    totalPrice -= discount;
-    return totalPrice.toFixed(2);
+    this.subTotal = totalPrice.toFixed(2);
+    this.couponTotal = (totalPrice * (this.couponPercent / 100)).toFixed(2);
+    totalPrice -= this.couponTotal;
+    this.total = totalPrice.toFixed(2);
   }
 
   applyCoupon(): void {
@@ -85,6 +97,7 @@ export class CheckoutComponent implements OnInit {
         .subscribe((res: any) => {
           if (!res.expStatus) {
             this.couponPercent = res.discount;
+            this.cartCalculation();
           } else {
             // set coupon expire or invalid code
           }
@@ -92,18 +105,26 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  couponTotal(): string {
-    let totalAmount = 0;
-    for (const item of this.cartItems) {
-      const price = parseFloat(item.productDetails.price);
-      const quantity = parseInt(item.qty);
-      totalAmount += price * quantity;
+  finalOrder() {
+    if (this.BillingForm.valid) {
+      const order = { ...this.BillingForm.value };
+      order.userId = this.userDetails.uid;
+      order.items = this.cartItems;
+      order.total = this.total;
+      order.subtotal = this.subTotal;
+      order.couponInfo = {
+        percent: this.couponPercent,
+        code: this.CouponForm.value['code'],
+      };
+      order.couponTotal = this.couponTotal;
+      order.status = 'Pending';
+      this.productService.checkoutOrder(order).subscribe(() => {
+        this.productService
+          .removeCartItems(this.userDetails.uid)
+          .subscribe((fc: any) => {
+            console.log('fc', fc);
+          });
+      });
     }
-    const discountAmount = (totalAmount * this.couponPercent) / 100;
-    return discountAmount.toFixed(2);
-  }
-
-  placeOrder() {
-    console.log('t', this.BillingForm.value);
   }
 }

@@ -1,6 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../shared/services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ProductService } from '../shared/services/product.service';
+
+interface ProductsDetails {
+  id: number;
+  orderId: string;
+  items: Array<any>;
+  total: number;
+  status: string;
+}
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -9,14 +18,25 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ProfileComponent implements OnInit {
   profileForm!: FormGroup;
   userId = '';
+  userDetails: any;
+
+  orders: Array<ProductsDetails> = [];
+  shipping: Array<ProductsDetails> = [];
+  returns: Array<ProductsDetails> = [];
+
   constructor(
     public userService: UserService,
-    private formBuilder: FormBuilder
-  ) {}
+    private formBuilder: FormBuilder,
+    private productService: ProductService
+  ) {
+    const userDetailsString = localStorage.getItem('user');
+    this.userDetails =
+      userDetailsString !== null ? JSON.parse(userDetailsString) : {};
+  }
 
   ngOnInit(): void {
     this.userService
-      .profileDetailsById('EGK3TS5yJ7N5fp2CUAbBB1CXvSE2')
+      .profileDetailsById(this.userDetails.uid)
       .subscribe((data) => {
         console.log('Projected user data:', data);
         this.userId = data.id;
@@ -45,6 +65,8 @@ export class ProfileComponent implements OnInit {
       country: ['', Validators.required],
       state: ['', Validators.required],
     });
+
+    this.orderList();
   }
 
   profileSave(): void {
@@ -55,5 +77,14 @@ export class ProfileComponent implements OnInit {
           console.log('res', res);
         });
     }
+  }
+
+  orderList(): void {
+    this.productService
+      .allOrders(this.userDetails.uid)
+      .subscribe((res: any) => {
+        console.log('res', res);
+        this.orders = res;
+      });
   }
 }

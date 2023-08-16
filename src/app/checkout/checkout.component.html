@@ -1,8 +1,7 @@
-<!-- Start Hero Section -->
 <div class="hero">
   <div class="container">
     <div class="row justify-content-between">
-      <div class="col-lg-5">
+      <div class="col-lg-2">
         <div class="intro-excerpt">
           <h1>Checkout</h1>
         </div>
@@ -11,11 +10,10 @@
     </div>
   </div>
 </div>
-<!-- End Hero Section -->
 
 <div class="untree_co-section">
   <div class="container">
-    <form [formGroup]="BillingForm" (ngSubmit)="placeOrder()">
+    <form [formGroup]="BillingForm" (ngSubmit)="finalOrder()">
       <div class="row">
         <div class="col-md-6 mb-5 mb-md-0">
           <h2 class="h3 mb-3 text-black">Billing Details</h2>
@@ -28,17 +26,38 @@
                 id="c_country"
                 class="form-control"
                 formControlName="country"
+                [ngClass]="{
+                  'is-invalid':
+                    BillingForm.get('country')?.invalid &&
+                    BillingForm.get('country')?.touched,
+                  'is-valid':
+                    BillingForm.get('country')?.valid &&
+                    BillingForm.get('country')?.touched
+                }"
               >
                 <option value="1">Select a country</option>
-                <option value="2">bangladesh</option>
-                <option value="3">Algeria</option>
-                <option value="4">Afghanistan</option>
-                <option value="5">Ghana</option>
-                <option value="6">Albania</option>
-                <option value="7">Bahrain</option>
-                <option value="8">Colombia</option>
-                <option value="9">Dominican Republic</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="India">India</option>
+                <option value="Afghanistan">Afghanistan</option>
+                <option value="Ghana">Ghana</option>
+                <option value="Albania">Albania</option>
+                <option value="Bahrain">Bahrain</option>
+                <option value="Colombia">Colombia</option>
+                <option value="Dominican Republic">Dominican Republic</option>
               </select>
+              <div
+                *ngIf="
+                  BillingForm.get('country')?.invalid &&
+                  BillingForm.get('country')?.touched
+                "
+              >
+                <div
+                  *ngIf="BillingForm.get('country')?.hasError('required')"
+                  class="invalid-feedback"
+                >
+                  Country is required.
+                </div>
+              </div>
             </div>
             <div class="form-group row">
               <div class="col-md-6">
@@ -51,7 +70,28 @@
                   id="c_fname"
                   name="c_fname"
                   formControlName="firstName"
+                  [ngClass]="{
+                    'is-invalid':
+                      BillingForm.get('firstName')?.invalid &&
+                      BillingForm.get('firstName')?.touched,
+                    'is-valid':
+                      BillingForm.get('firstName')?.valid &&
+                      BillingForm.get('firstName')?.touched
+                  }"
                 />
+                <div
+                  *ngIf="
+                    BillingForm.get('firstName')?.invalid &&
+                    BillingForm.get('firstName')?.touched
+                  "
+                >
+                  <div
+                    *ngIf="BillingForm.get('firstName')?.hasError('required')"
+                    class="invalid-feedback"
+                  >
+                    Name is required.
+                  </div>
+                </div>
               </div>
               <div class="col-md-6">
                 <label for="c_lname" class="text-black"
@@ -63,7 +103,28 @@
                   id="c_lname"
                   name="c_lname"
                   formControlName="lastName"
+                  [ngClass]="{
+                    'is-invalid':
+                      BillingForm.get('lastName')?.invalid &&
+                      BillingForm.get('lastName')?.touched,
+                    'is-valid':
+                      BillingForm.get('lastName')?.valid &&
+                      BillingForm.get('lastName')?.touched
+                  }"
                 />
+                <div
+                  *ngIf="
+                    BillingForm.get('lastName')?.invalid &&
+                    BillingForm.get('lastName')?.touched
+                  "
+                >
+                  <div
+                    *ngIf="BillingForm.get('lastName')?.hasError('required')"
+                    class="invalid-feedback"
+                  >
+                    Name is required.
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -78,7 +139,28 @@
                   id="c_companyname"
                   name="c_companyname"
                   formControlName="companyName"
+                  [ngClass]="{
+                    'is-invalid':
+                      BillingForm.get('companyName')?.invalid &&
+                      BillingForm.get('companyName')?.touched,
+                    'is-valid':
+                      BillingForm.get('companyName')?.valid &&
+                      BillingForm.get('companyName')?.touched
+                  }"
                 />
+                <div
+                  *ngIf="
+                    BillingForm.get('companyName')?.invalid &&
+                    BillingForm.get('companyName')?.touched
+                  "
+                >
+                  <div
+                    *ngIf="BillingForm.get('companyName')?.hasError('required')"
+                    class="invalid-feedback"
+                  >
+                    Name is required.
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -94,7 +176,28 @@
                   name="c_address"
                   placeholder="Street address"
                   formControlName="address1"
+                  [ngClass]="{
+                    'is-invalid':
+                      BillingForm.get('address1')?.invalid &&
+                      BillingForm.get('address1')?.touched,
+                    'is-valid':
+                      BillingForm.get('address1')?.valid &&
+                      BillingForm.get('address1')?.touched
+                  }"
                 />
+                <div
+                  *ngIf="
+                    BillingForm.get('address1')?.invalid &&
+                    BillingForm.get('address1')?.touched
+                  "
+                >
+                  <div
+                    *ngIf="BillingForm.get('address1')?.hasError('required')"
+                    class="invalid-feedback"
+                  >
+                    Name is required.
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -118,7 +221,28 @@
                   id="c_state_country"
                   name="c_state_country"
                   formControlName="state"
+                  [ngClass]="{
+                    'is-invalid':
+                      BillingForm.get('state')?.invalid &&
+                      BillingForm.get('state')?.touched,
+                    'is-valid':
+                      BillingForm.get('state')?.valid &&
+                      BillingForm.get('state')?.touched
+                  }"
                 />
+                <div
+                  *ngIf="
+                    BillingForm.get('state')?.invalid &&
+                    BillingForm.get('state')?.touched
+                  "
+                >
+                  <div
+                    *ngIf="BillingForm.get('state')?.hasError('required')"
+                    class="invalid-feedback"
+                  >
+                    state is required.
+                  </div>
+                </div>
               </div>
               <div class="col-md-6">
                 <label for="c_postal_zip" class="text-black"
@@ -130,7 +254,28 @@
                   id="c_postal_zip"
                   name="c_postal_zip"
                   formControlName="postal"
+                  [ngClass]="{
+                    'is-invalid':
+                      BillingForm.get('postal')?.invalid &&
+                      BillingForm.get('postal')?.touched,
+                    'is-valid':
+                      BillingForm.get('postal')?.valid &&
+                      BillingForm.get('postal')?.touched
+                  }"
                 />
+                <div
+                  *ngIf="
+                    BillingForm.get('postal')?.invalid &&
+                    BillingForm.get('postal')?.touched
+                  "
+                >
+                  <div
+                    *ngIf="BillingForm.get('postal')?.hasError('required')"
+                    class="invalid-feedback"
+                  >
+                    postal is required.
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -145,7 +290,28 @@
                   id="c_email_address"
                   name="c_email_address"
                   formControlName="email"
+                  [ngClass]="{
+                    'is-invalid':
+                      BillingForm.get('email')?.invalid &&
+                      BillingForm.get('email')?.touched,
+                    'is-valid':
+                      BillingForm.get('email')?.valid &&
+                      BillingForm.get('email')?.touched
+                  }"
                 />
+                <div
+                  *ngIf="
+                    BillingForm.get('email')?.invalid &&
+                    BillingForm.get('email')?.touched
+                  "
+                >
+                  <div
+                    *ngIf="BillingForm.get('email')?.hasError('required')"
+                    class="invalid-feedback"
+                  >
+                    postal is required.
+                  </div>
+                </div>
               </div>
               <div class="col-md-6">
                 <label for="c_phone" class="text-black"
@@ -158,11 +324,32 @@
                   name="c_phone"
                   placeholder="Phone Number"
                   formControlName="phoneno"
+                  [ngClass]="{
+                    'is-invalid':
+                      BillingForm.get('phoneno')?.invalid &&
+                      BillingForm.get('phoneno')?.touched,
+                    'is-valid':
+                      BillingForm.get('phoneno')?.valid &&
+                      BillingForm.get('phoneno')?.touched
+                  }"
                 />
+                <div
+                  *ngIf="
+                    BillingForm.get('phoneno')?.invalid &&
+                    BillingForm.get('phoneno')?.touched
+                  "
+                >
+                  <div
+                    *ngIf="BillingForm.get('phoneno')?.hasError('required')"
+                    class="invalid-feedback"
+                  >
+                    postal is required.
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label
                 for="c_ship_different_address"
                 class="text-black"
@@ -213,7 +400,30 @@
                         id="c_diff_fname"
                         name="c_diff_fname"
                         formControlName="s_firstName"
+                        [ngClass]="{
+                          'is-invalid':
+                            BillingForm.get('s_firstName')?.invalid &&
+                            BillingForm.get('s_firstName')?.touched,
+                          'is-valid':
+                            BillingForm.get('s_firstName')?.valid &&
+                            BillingForm.get('s_firstName')?.touched
+                        }"
                       />
+                      <div
+                        *ngIf="
+                          BillingForm.get('s_firstName')?.invalid &&
+                          BillingForm.get('s_firstName')?.touched
+                        "
+                      >
+                        <div
+                          *ngIf="
+                            BillingForm.get('s_firstName')?.hasError('required')
+                          "
+                          class="invalid-feedback"
+                        >
+                          postal is required.
+                        </div>
+                      </div>
                     </div>
                     <div class="col-md-6">
                       <label for="c_diff_lname" class="text-black"
@@ -225,7 +435,30 @@
                         id="c_diff_lname"
                         name="c_diff_lname"
                         formControlName="s_lastName"
+                        [ngClass]="{
+                          'is-invalid':
+                            BillingForm.get('s_lastName')?.invalid &&
+                            BillingForm.get('s_lastName')?.touched,
+                          'is-valid':
+                            BillingForm.get('s_lastName')?.valid &&
+                            BillingForm.get('s_lastName')?.touched
+                        }"
                       />
+                      <div
+                        *ngIf="
+                          BillingForm.get('s_lastName')?.invalid &&
+                          BillingForm.get('s_lastName')?.touched
+                        "
+                      >
+                        <div
+                          *ngIf="
+                            BillingForm.get('s_lastName')?.hasError('required')
+                          "
+                          class="invalid-feedback"
+                        >
+                          postal is required.
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -256,7 +489,30 @@
                         name="c_diff_address"
                         placeholder="Street address"
                         formControlName="s_address1"
+                        [ngClass]="{
+                          'is-invalid':
+                            BillingForm.get('s_address1')?.invalid &&
+                            BillingForm.get('s_address1')?.touched,
+                          'is-valid':
+                            BillingForm.get('s_address1')?.valid &&
+                            BillingForm.get('s_address1')?.touched
+                        }"
                       />
+                      <div
+                        *ngIf="
+                          BillingForm.get('s_address1')?.invalid &&
+                          BillingForm.get('s_address1')?.touched
+                        "
+                      >
+                        <div
+                          *ngIf="
+                            BillingForm.get('s_address1')?.hasError('required')
+                          "
+                          class="invalid-feedback"
+                        >
+                          postal is required.
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -281,7 +537,30 @@
                         id="c_diff_state_country"
                         name="c_diff_state_country"
                         formControlName="s_state"
+                        [ngClass]="{
+                          'is-invalid':
+                            BillingForm.get('s_state')?.invalid &&
+                            BillingForm.get('s_state')?.touched,
+                          'is-valid':
+                            BillingForm.get('s_state')?.valid &&
+                            BillingForm.get('s_state')?.touched
+                        }"
                       />
+                      <div
+                        *ngIf="
+                          BillingForm.get('s_state')?.invalid &&
+                          BillingForm.get('s_state')?.touched
+                        "
+                      >
+                        <div
+                          *ngIf="
+                            BillingForm.get('s_state')?.hasError('required')
+                          "
+                          class="invalid-feedback"
+                        >
+                          postal is required.
+                        </div>
+                      </div>
                     </div>
                     <div class="col-md-6">
                       <label for="c_diff_postal_zip" class="text-black"
@@ -293,7 +572,30 @@
                         id="c_diff_postal_zip"
                         name="c_diff_postal_zip"
                         formControlName="s_postal"
+                        [ngClass]="{
+                          'is-invalid':
+                            BillingForm.get('s_postal')?.invalid &&
+                            BillingForm.get('s_postal')?.touched,
+                          'is-valid':
+                            BillingForm.get('s_postal')?.valid &&
+                            BillingForm.get('s_postal')?.touched
+                        }"
                       />
+                      <div
+                        *ngIf="
+                          BillingForm.get('s_postal')?.invalid &&
+                          BillingForm.get('s_postal')?.touched
+                        "
+                      >
+                        <div
+                          *ngIf="
+                            BillingForm.get('s_postal')?.hasError('required')
+                          "
+                          class="invalid-feedback"
+                        >
+                          postal is required.
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -308,7 +610,30 @@
                         id="c_diff_email_address"
                         name="c_diff_email_address"
                         formControlName="s_email"
+                        [ngClass]="{
+                          'is-invalid':
+                            BillingForm.get('s_email')?.invalid &&
+                            BillingForm.get('s_email')?.touched,
+                          'is-valid':
+                            BillingForm.get('s_email')?.valid &&
+                            BillingForm.get('s_email')?.touched
+                        }"
                       />
+                      <div
+                        *ngIf="
+                          BillingForm.get('s_email')?.invalid &&
+                          BillingForm.get('s_email')?.touched
+                        "
+                      >
+                        <div
+                          *ngIf="
+                            BillingForm.get('s_email')?.hasError('required')
+                          "
+                          class="invalid-feedback"
+                        >
+                          postal is required.
+                        </div>
+                      </div>
                     </div>
                     <div class="col-md-6">
                       <label for="c_diff_phone" class="text-black"
@@ -321,12 +646,35 @@
                         name="c_diff_phone"
                         placeholder="Phone Number"
                         formControlName="s_phoneno"
+                        [ngClass]="{
+                          'is-invalid':
+                            BillingForm.get('s_phoneno')?.invalid &&
+                            BillingForm.get('s_phoneno')?.touched,
+                          'is-valid':
+                            BillingForm.get('s_phoneno')?.valid &&
+                            BillingForm.get('s_phoneno')?.touched
+                        }"
                       />
+                      <div
+                        *ngIf="
+                          BillingForm.get('s_phoneno')?.invalid &&
+                          BillingForm.get('s_phoneno')?.touched
+                        "
+                      >
+                        <div
+                          *ngIf="
+                            BillingForm.get('s_phoneno')?.hasError('required')
+                          "
+                          class="invalid-feedback"
+                        >
+                          postal is required.
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <div class="form-group">
               <label for="c_order_notes" class="text-black">Order Notes</label>
@@ -338,7 +686,28 @@
                 class="form-control"
                 placeholder="Write your notes here..."
                 formControlName="orderNotes"
+                [ngClass]="{
+                  'is-invalid':
+                    BillingForm.get('orderNotes')?.invalid &&
+                    BillingForm.get('orderNotes')?.touched,
+                  'is-valid':
+                    BillingForm.get('orderNotes')?.valid &&
+                    BillingForm.get('orderNotes')?.touched
+                }"
               ></textarea>
+              <div
+                *ngIf="
+                  BillingForm.get('orderNotes')?.invalid &&
+                  BillingForm.get('orderNotes')?.touched
+                "
+              >
+                <div
+                  *ngIf="BillingForm.get('orderNotes')?.hasError('required')"
+                  class="invalid-feedback"
+                >
+                  postal is required.
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -383,7 +752,6 @@
               </div>
             </div>
           </form>
-
           <div class="row mb-5">
             <div class="col-md-12">
               <h2 class="h3 mb-3 text-black">Your Order</h2>
@@ -408,20 +776,20 @@
                       <td class="text-black font-weight-bold">
                         <strong>Cart Subtotal</strong>
                       </td>
-                      <td class="text-black">£{{ cartTotal() }}</td>
+                      <td class="text-black">£{{ subTotal }}</td>
                     </tr>
                     <tr *ngIf="couponPercent > 0">
                       <td class="text-black font-weight-bold">
                         <strong>Coupon Code</strong>
                       </td>
-                      <td class="text-black">£{{ couponTotal() }}</td>
+                      <td class="text-black">£{{ couponTotal }}</td>
                     </tr>
                     <tr>
                       <td class="text-black font-weight-bold">
                         <strong>Order Total</strong>
                       </td>
                       <td class="text-black font-weight-bold">
-                        <strong>£{{ cartTotal() }}</strong>
+                        <strong>£{{ total }}</strong>
                       </td>
                     </tr>
                   </tbody>

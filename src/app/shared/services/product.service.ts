@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {
   Firestore,
   collection,
-  query,
   collectionData,
   limit,
   doc,
@@ -11,9 +10,10 @@ import {
   setDoc,
   updateDoc,
   getDoc,
+  query,
 } from '@angular/fire/firestore';
 import { from, Observable } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, mergeMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -23,6 +23,7 @@ export class ProductService {
   productsCollection = collection(this.firestore, 'products');
   wishlistCollection = collection(this.firestore, 'wishlist');
   cartCollection = collection(this.firestore, 'cart');
+  orderCollection = collection(this.firestore, 'orders');
 
   constructor(public firestore: Firestore, private router: Router) {}
 
@@ -172,5 +173,31 @@ export class ProductService {
         );
       })
     );
+  }
+
+  checkoutOrder(order: any): Observable<void> {
+    const orderRef = doc(this.orderCollection);
+    return from(setDoc(orderRef, order));
+  }
+
+  removeCartItems(userId: string): Observable<any[]> {
+    const cartItemRef = query(
+      this.cartCollection,
+      where('userId', '==', userId)
+    );
+    return collectionData(cartItemRef, { idField: 'id' }).pipe(
+      mergeMap((cartItems: any[]) => {
+        const deletePromises = cartItems.map((cartItem: any) => {
+          const cartItemRef = doc(this.cartCollection, cartItem.id);
+          return deleteDoc(cartItemRef);
+        });
+        return from(Promise.all(deletePromises));
+      })
+    );
+  }
+
+  allOrders(userId: string): Observable<any[]> {
+    const order = query(this.orderCollection, where('userId', '==', userId));
+    return collectionData(order, { idField: 'id' });
   }
 }
